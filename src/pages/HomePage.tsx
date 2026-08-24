@@ -10,10 +10,10 @@ export function HomePage() {
       <header className="hub-hero">
         <img src={local.logoHeader} alt="Bravo Transport LLC" className="hub-logo" />
         <div className="hub-hero-copy">
-          <p className="hub-eyebrow">Internal tools</p>
-          <h1 className="hub-title">Tools</h1>
+          <h1 className="hub-title">Bravo Digital Workspace</h1>
           <p className="hub-lede">
-            Internal apps for the team — pick a tool to get started.
+            Bravo Transport email signature with your name, title, and contact
+            details, then copy the ready-to-use HTML for Gmail, Outlook, or Apple Mail.
           </p>
         </div>
       </header>

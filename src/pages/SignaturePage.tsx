@@ -68,7 +68,7 @@ export function SignaturePage() {
   return (
     <div className="app">
       <Link to="/" className="back-tools">
-        ← Tools
+        ← Workspace
       </Link>
 
       <header className="hero">
@@ -77,8 +77,8 @@ export function SignaturePage() {
           <p className="eyebrow">Bravo Transport LLC</p>
           <h1>Email Signature Generator</h1>
           <p className="lede">
-            Build a client-ready signature with your name and title, then copy or
-            download the HTML for Gmail, Outlook, or Apple Mail.
+            Bravo Transport email signature with your name, title, and contact
+            details, then copy the ready-to-use HTML for Gmail, Outlook, or Apple Mail.
           </p>
         </div>
       </header>
