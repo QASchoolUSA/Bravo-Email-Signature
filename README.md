@@ -1,6 +1,6 @@
-# Bravo Transport — Email Signature Generator
+# Bravo Transport — Tools
 
-Web app to generate Outlook-safe HTML email signatures for [Bravo Transport](https://bravo-transport.com/en/).
+Internal tools hub for [Bravo Transport](https://bravo-transport.com/en/).
 
 ## Run locally
 
@@ -16,12 +16,20 @@ npm run build    # production build → dist/
 npm run preview  # preview the production build
 ```
 
-## How to use
+## Routes
 
-1. Enter **full name** (required) and **title** (optional — leave blank to omit).
-2. Adjust email, phones, fax, company, address, and website as needed.
-3. Toggle social icons if desired.
-4. Click **Copy HTML** and paste into your email client, or **Download HTML**.
+| Path | Page |
+|------|------|
+| `/` | Tools homepage (tile hub) |
+| `/signature` | Email Signature Generator |
+
+## Email Signature Generator
+
+1. From the homepage, open **Email Signature Generator**, or go to `/signature`.
+2. Enter **full name** (required) and **title** (optional — leave blank to omit).
+3. Adjust email, phones, fax, company, address, and website as needed.
+4. Toggle social icons if desired.
+5. Click **Copy HTML** and paste into your email client, or **Download HTML**.
 
 ### Install in email clients
 

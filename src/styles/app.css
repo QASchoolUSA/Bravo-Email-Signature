@@ -34,6 +34,15 @@ body,
 }
 
 body {
+  background: #071820;
+}
+
+.app {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 32px max(20px, calc((100% - 1180px) / 2)) 48px;
+  min-height: 100dvh;
   background:
     radial-gradient(1200px 500px at 10% -10%, rgba(42, 145, 199, 0.18), transparent 60%),
     linear-gradient(180deg, #f3f8fb 0%, var(--surface) 42%, #eef4f8 100%),
@@ -43,10 +52,26 @@ body {
   background-attachment: fixed;
 }
 
-.app {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 32px 20px 48px;
+.back-tools {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 12px;
+  padding: 0 2px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.back-tools:hover {
+  color: var(--blue);
+}
+
+.back-tools:focus-visible {
+  outline: 3px solid rgba(42, 145, 199, 0.45);
+  outline-offset: 3px;
 }
 
 .hero {
