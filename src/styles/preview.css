@@ -2,18 +2,40 @@
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+  background: #ffffff;
+  color: #212121;
 }
 
 .preview-signature table {
-  width: 100% !important;
-  max-width: 100% !important;
+  background-color: #ffffff !important;
 }
 
 .preview-signature td {
-  max-width: 100%;
+  background-color: #ffffff;
 }
 
 .preview-signature img {
   max-width: 100% !important;
   height: auto !important;
+}
+
+.preview-frame {
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.preview-frame:not(.preview-frame--fluid) .preview-signature {
+  width: 600px;
+  max-width: none;
+  transform-origin: top left;
+}
+
+.preview-frame:not(.preview-frame--fluid) .preview-signature table {
+  width: 600px !important;
+  max-width: 600px !important;
+}
+
+.preview-frame--fluid .preview-signature table {
+  width: 100% !important;
+  max-width: 100% !important;
 }

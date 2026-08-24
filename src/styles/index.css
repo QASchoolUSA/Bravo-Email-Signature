@@ -8,13 +8,16 @@
   --color-sky: #2a91c7;
   --color-sky-light: #4da8d3;
   --color-charcoal: #212121;
-  --color-grey: #6e6868;
+  --color-grey: #5c6b75;
   --color-muted: #474642;
-  --color-surface: #fafafa;
+  --color-surface: #ffffff;
+  --color-canvas: #f4f7fa;
   --color-soft: #e6f0f7;
+  --color-line: #d7e3ec;
   --color-accent: #374a61;
   --color-title: #3a3a3a;
-  --radius-none: 0;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
 }
 
 @layer base {
@@ -30,7 +33,12 @@
   body {
     font-family: var(--font-sans);
     color: var(--color-charcoal);
-    background: var(--color-navy-deep);
+    background: var(--color-canvas);
     -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-sky);
+    outline-offset: 3px;
   }
 }

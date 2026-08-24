@@ -1,88 +1,114 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, useReducedMotion } from 'motion/react'
 import { AppShell } from '../components/AppShell'
-import { SERVICES_LINE, local } from '../lib/brand'
+import { ClientStage } from '../components/ClientStage'
+import { absoluteLogoUrl, defaultFields, SERVICES_LINE } from '../lib/brand'
+import { buildSignatureHtml } from '../lib/buildSignatureHtml'
+import { fadeUp, springSoft } from '../lib/motion'
 
 export function HomePage() {
-  return (
-    <AppShell darkHero>
-      <section className="relative isolate flex flex-1 flex-col">
-        <div
-          className="absolute inset-0 -z-10 bg-cover bg-center"
-          style={{ backgroundImage: `url(${local.fleet[1]})` }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-0 -z-10 bg-linear-to-b from-navy/80 via-navy-deep/78 to-navy-deep"
-          aria-hidden="true"
-        />
+  const reduce = useReducedMotion()
+  const previewHtml = useMemo(
+    () => buildSignatureHtml(defaultFields, { logoUrl: absoluteLogoUrl() }),
+    [],
+  )
 
-        <div className="mx-auto flex w-full max-w-[1180px] flex-1 flex-col px-5 py-10 sm:px-6 sm:py-14">
-          <div className="flex flex-col items-center text-center">
-            <img
-              src={local.logoHeader}
-              alt="Bravo Transport LLC"
-              className="mb-6 h-auto w-full max-w-[420px] drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
-            />
-            <h1 className="bg-white px-5 py-3 text-[clamp(1.5rem,4vw,2.35rem)] font-bold tracking-[-0.03em] text-title">
+  return (
+    <AppShell>
+      <main className="flex-1 px-4 py-8 sm:px-8 sm:py-12" aria-label="Bravo tools">
+        <div className="mx-auto grid w-full max-w-[1240px] items-center gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]">
+          <div>
+            <motion.p
+              variants={fadeUp}
+              initial={reduce ? false : 'hidden'}
+              animate="show"
+              transition={springSoft}
+              className="text-[12px] font-semibold tracking-[0.22em] text-sky uppercase"
+            >
               Bravo Digital Workspace
-            </h1>
+            </motion.p>
+            <motion.h1
+              variants={fadeUp}
+              initial={reduce ? false : 'hidden'}
+              animate="show"
+              transition={{ ...springSoft, delay: 0.05 }}
+              className="mt-3 max-w-[14ch] text-[clamp(2.2rem,5.5vw,3.6rem)] leading-[1.08] font-semibold tracking-[-0.03em] text-navy"
+            >
+              Internal tools for the next mile.
+            </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              initial={reduce ? false : 'hidden'}
+              animate="show"
+              transition={{ ...springSoft, delay: 0.1 }}
+              className="mt-4 max-w-[38ch] text-base leading-relaxed text-grey sm:text-lg"
+            >
+              Build a Bravo email signature and watch it land in the inbox — then copy HTML for Gmail, Outlook, or Apple Mail.
+            </motion.p>
+            <motion.div
+              variants={fadeUp}
+              initial={reduce ? false : 'hidden'}
+              animate="show"
+              transition={{ ...springSoft, delay: 0.14 }}
+              className="mt-6"
+            >
+              <Link
+                to="/signature"
+                className="inline-flex min-h-11 cursor-pointer items-center rounded-full bg-navy px-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#0a5275]"
+              >
+                Open signature generator
+              </Link>
+            </motion.div>
           </div>
 
-          <main className="mt-10 grid flex-1 grid-cols-1 gap-5 md:mt-14 md:grid-cols-2" aria-label="Bravo tools">
-            <div
-              className="group relative flex min-h-[280px] aspect-square cursor-not-allowed flex-col justify-end overflow-hidden border border-white/15 saturate-[0.72] md:min-h-0"
-              aria-disabled="true"
-              role="group"
-              aria-label="Pre Trip Inspection App, coming soon"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${local.fleet[2]})` }}
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-navy-deep via-navy-deep/55 to-navy/20" />
-              <div className="relative z-10 p-6 sm:p-7">
-                <span className="inline-flex min-h-7 items-center border border-white/20 bg-white/10 px-2.5 text-[10px] font-bold tracking-[0.12em] text-white/75 uppercase">
-                  Coming soon
-                </span>
-                <h2 className="mt-3 text-[clamp(1.15rem,2.4vw,1.55rem)] font-bold tracking-[-0.02em] text-white">
-                  Pre Trip Inspection App
-                </h2>
-                <p className="mt-1 text-sm text-white/75">Driver inspection workflow</p>
-              </div>
-            </div>
-
-            <Link
-              to="/signature"
-              className="group relative flex min-h-[280px] aspect-square flex-col justify-end overflow-hidden border border-white/15 transition duration-200 hover:-translate-y-0.5 hover:border-sky-light/70 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-light motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:min-h-0"
-              aria-label="Open Email Signature Generator"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.05] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                style={{ backgroundImage: `url(${local.fleet[0]})` }}
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-navy-deep via-navy-deep/50 to-navy/10" />
-              <div className="relative z-10 p-6 sm:p-7">
-                <span className="inline-flex min-h-7 items-center border border-sky-light/55 bg-sky/35 px-2.5 text-[10px] font-bold tracking-[0.12em] text-white uppercase">
-                  Available
-                </span>
-                <h2 className="mt-3 text-[clamp(1.15rem,2.4vw,1.55rem)] font-bold tracking-[-0.02em] text-white">
-                  Email Signature Generator
-                </h2>
-                <p className="mt-1 text-sm text-white/75">Build and copy Outlook-ready signatures</p>
-                <span className="mt-4 inline-flex min-h-11 items-center bg-sky-light px-4 text-xs font-bold tracking-[0.06em] text-navy uppercase group-hover:bg-[#7ec4e4]">
-                  Open tool
-                </span>
-              </div>
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={reduce ? undefined : { y: -4 }}
+            transition={reduce ? { duration: 0 } : { duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Link to="/signature" className="block cursor-pointer" aria-label="Open Email Signature Generator">
+              <ClientStage html={previewHtml} compact />
             </Link>
-          </main>
+          </motion.div>
         </div>
 
-        <div className="border-t border-white/10 bg-navy/85">
-          <p className="mx-auto max-w-[1180px] px-5 py-3 text-center text-[11px] font-semibold tracking-[0.16em] text-sky-light uppercase sm:px-6">
-            {SERVICES_LINE}
-          </p>
+        <div className="mx-auto mt-10 grid w-full max-w-[1240px] grid-cols-1 gap-4 sm:grid-cols-2">
+          <Link
+            to="/signature"
+            className="flex min-h-28 cursor-pointer flex-col justify-between rounded-2xl bg-navy p-6 text-white shadow-[0_12px_32px_rgba(8,65,94,0.18)] transition-colors duration-200 hover:bg-[#0a5275]"
+            aria-label="Open Email Signature Generator"
+          >
+            <span className="w-fit rounded-full bg-sky px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] uppercase">
+              Available
+            </span>
+            <div>
+              <h2 className="text-2xl font-semibold">Email Signature</h2>
+              <p className="mt-1 text-sm text-sky-light">Generate, preview, copy HTML</p>
+            </div>
+          </Link>
+
+          <div
+            className="flex min-h-28 flex-col justify-between rounded-2xl border border-line bg-white p-6"
+            aria-disabled="true"
+            role="group"
+            aria-label="Pre Trip Inspection App, coming soon"
+          >
+            <span className="w-fit rounded-full bg-soft px-2.5 py-1 text-[10px] font-bold tracking-[0.12em] text-grey uppercase">
+              Coming soon
+            </span>
+            <div>
+              <h2 className="text-2xl font-semibold text-navy">Pre Trip Inspection</h2>
+              <p className="mt-1 text-sm text-grey">Driver inspection workflow</p>
+            </div>
+          </div>
         </div>
-      </section>
+
+        <p className="mx-auto mt-8 max-w-[1240px] text-center text-[11px] font-medium tracking-[0.12em] text-grey uppercase">
+          {SERVICES_LINE}
+        </p>
+      </main>
     </AppShell>
   )
 }

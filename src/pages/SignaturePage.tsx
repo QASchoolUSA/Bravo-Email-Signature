@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import { AppShell } from '../components/AppShell'
+import { ClientStage } from '../components/ClientStage'
 import { SignatureForm } from '../components/SignatureForm'
-import { SignaturePreview } from '../components/SignaturePreview'
 import { absoluteLogoUrl, defaultFields, type SignatureFields } from '../lib/brand'
 import { buildSignatureHtml } from '../lib/buildSignatureHtml'
+import { fadeUp, springSoft } from '../lib/motion'
 
 function slugify(name: string): string {
   return (
@@ -17,6 +19,7 @@ function slugify(name: string): string {
 }
 
 export function SignaturePage() {
+  const reduce = useReducedMotion()
   const [fields, setFields] = useState<SignatureFields>(defaultFields)
   const [status, setStatus] = useState<string | null>(null)
 
@@ -24,6 +27,12 @@ export function SignaturePage() {
     () => buildSignatureHtml(fields, { logoUrl: absoluteLogoUrl() }),
     [fields],
   )
+
+  useEffect(() => {
+    if (!status) return
+    const id = window.setTimeout(() => setStatus(null), 4000)
+    return () => window.clearTimeout(id)
+  }, [status])
 
   async function copyHtml() {
     try {
@@ -67,79 +76,124 @@ export function SignaturePage() {
 
   return (
     <AppShell>
-      <section className="border-b border-navy/10 bg-navy">
-        <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-3 px-5 py-6 sm:px-6">
+      <section className="px-4 pt-6 sm:px-8 sm:pt-8">
+        <div className="mx-auto w-full max-w-[1240px]">
           <Link
             to="/"
-            className="inline-flex min-h-11 w-fit items-center text-sm font-bold tracking-[0.04em] text-sky-light hover:text-white"
+            className="inline-flex min-h-11 w-fit cursor-pointer items-center text-sm font-semibold text-navy hover:text-sky"
           >
             ← Workspace
           </Link>
-          <div>
-            <p className="text-[11px] font-bold tracking-[0.16em] text-sky-light uppercase">Bravo Transport LLC</p>
-            <h1 className="mt-1 text-[clamp(1.45rem,2.4vw,1.9rem)] font-bold tracking-[-0.02em] text-white">
-              Email Signature Generator
-            </h1>
-            <p className="mt-2 max-w-[52ch] text-sm leading-relaxed text-white/80">
-              Bravo Transport email signature with your name, title, and contact details, then
-              copy the ready-to-use HTML for Gmail, Outlook, or Apple Mail.
-            </p>
-          </div>
+          <motion.p
+            variants={fadeUp}
+            initial={reduce ? false : 'hidden'}
+            animate="show"
+            transition={springSoft}
+            className="mt-4 text-[12px] font-semibold tracking-[0.22em] text-sky uppercase"
+          >
+            Bravo Digital Workspace
+          </motion.p>
+          <motion.h1
+            variants={fadeUp}
+            initial={reduce ? false : 'hidden'}
+            animate="show"
+            transition={{ ...springSoft, delay: 0.05 }}
+            className="mt-2 max-w-[16ch] text-[clamp(1.8rem,4.5vw,2.8rem)] leading-[1.12] font-semibold tracking-[-0.03em] text-navy"
+          >
+            Email signature generator
+          </motion.h1>
         </div>
       </section>
 
-      <main className="mx-auto grid w-full max-w-[1180px] min-w-0 flex-1 grid-cols-1 items-start gap-5 px-5 py-6 sm:px-6 sm:py-8 lg:grid-cols-2">
-        <section className="border border-[#d4dee6] bg-white p-5 shadow-[0_18px_48px_rgba(8,65,94,0.12)] sm:p-6">
-          <h2 className="text-lg font-bold text-navy">Your details</h2>
-          <p className="mt-1 mb-5 text-sm text-grey">
-            Title is optional — leave it blank to hide it from the signature.
-          </p>
-          <SignatureForm fields={fields} onChange={setFields} />
-          <div className="mt-5 flex flex-wrap gap-2.5">
-            <button
-              type="button"
-              disabled={!canExport}
-              onClick={copyHtml}
-              className="min-h-11 cursor-pointer bg-navy px-5 text-sm font-semibold tracking-[0.02em] text-white transition duration-150 hover:bg-[#0a5275] disabled:cursor-not-allowed disabled:opacity-45"
-            >
-              Copy HTML
-            </button>
-            <button
-              type="button"
-              disabled={!canExport}
-              onClick={downloadHtml}
-              className="min-h-11 cursor-pointer border border-[#c5d9e6] bg-soft px-5 text-sm font-semibold tracking-[0.02em] text-navy transition duration-150 hover:border-sky disabled:cursor-not-allowed disabled:opacity-45"
-            >
-              Download HTML
-            </button>
-          </div>
-          {status ? (
-            <p className="mt-3 border border-[#c6e3cc] bg-[#eaf6ec] px-3 py-2.5 text-sm text-[#1f5a2c]" role="status">
-              {status}
+      <main className="flex-1 pb-28 lg:pb-16">
+        <div className="mx-auto grid w-full max-w-[1320px] min-w-0 grid-cols-1 items-start gap-6 px-4 py-6 sm:px-8 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)]">
+          <section className="order-2 rounded-2xl border border-line bg-white p-5 shadow-[0_8px_24px_rgba(8,65,94,0.06)] sm:p-7 lg:order-1">
+            <h2 className="text-lg font-semibold text-navy">Your details</h2>
+            <p className="mt-1 mb-5 text-sm text-grey">
+              Title is optional — leave it blank to hide it from the signature.
             </p>
-          ) : null}
-          <details className="mt-4 border-t border-[#d4dee6] pt-3 text-sm text-muted">
-            <summary className="cursor-pointer font-semibold text-navy">How to install</summary>
-            <ul className="mt-2 list-disc space-y-1.5 pl-5">
-              <li>
-                <strong>Gmail:</strong> Settings → See all settings → General → Signature → paste
-                (Cmd/Ctrl+V).
-              </li>
-              <li>
-                <strong>Outlook (desktop):</strong> File → Options → Mail → Signatures → paste into
-                the editor.
-              </li>
-              <li>
-                <strong>Apple Mail:</strong> Settings → Signatures → paste into a new signature.
-              </li>
-            </ul>
-          </details>
-        </section>
+            <SignatureForm fields={fields} onChange={setFields} />
+            <div className="mt-5 hidden flex-wrap gap-2.5 lg:flex">
+              <ExportButtons canExport={canExport} onCopy={copyHtml} onDownload={downloadHtml} />
+            </div>
+            <details className="mt-5 border-t border-line pt-3 text-sm text-grey">
+              <summary className="cursor-pointer font-semibold text-navy">How to install</summary>
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-charcoal">
+                <li>
+                  <strong>Gmail:</strong> Settings → See all settings → General → Signature → paste
+                  (Cmd/Ctrl+V).
+                </li>
+                <li>
+                  <strong>Outlook (desktop):</strong> File → Options → Mail → Signatures → paste into
+                  the editor.
+                </li>
+                <li>
+                  <strong>Apple Mail:</strong> Settings → Signatures → paste into a new signature.
+                </li>
+              </ul>
+            </details>
+          </section>
 
-        <section className="min-w-0 overflow-hidden border border-[#d4dee6] bg-white shadow-[0_18px_48px_rgba(8,65,94,0.12)]">
-          <SignaturePreview html={html} />
-        </section>
+          <section className="order-1 min-w-0 lg:order-2">
+            <ClientStage html={html} fromName={fields.fullName} fromEmail={fields.email} />
+          </section>
+        </div>
       </main>
+
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-white/95 p-3 backdrop-blur-md lg:hidden pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="mx-auto flex max-w-[1240px] flex-wrap gap-2.5">
+          <ExportButtons canExport={canExport} onCopy={copyHtml} onDownload={downloadHtml} full />
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {status ? (
+          <motion.p
+            key={status}
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            className="fixed right-4 bottom-24 z-30 max-w-sm rounded-xl bg-navy px-4 py-3 text-sm text-white shadow-[0_12px_32px_rgba(8,65,94,0.24)] lg:bottom-8"
+            role="status"
+          >
+            {status}
+          </motion.p>
+        ) : null}
+      </AnimatePresence>
     </AppShell>
+  )
+}
+
+function ExportButtons({
+  canExport,
+  onCopy,
+  onDownload,
+  full = false,
+}: {
+  canExport: boolean
+  onCopy: () => void
+  onDownload: () => void
+  full?: boolean
+}) {
+  const width = full ? 'flex-1' : ''
+  return (
+    <>
+      <button
+        type="button"
+        disabled={!canExport}
+        onClick={onCopy}
+        className={`${width} min-h-11 cursor-pointer rounded-full bg-navy px-5 text-sm font-semibold text-white transition duration-150 hover:bg-[#0a5275] disabled:cursor-not-allowed disabled:opacity-45`}
+      >
+        Copy HTML
+      </button>
+      <button
+        type="button"
+        disabled={!canExport}
+        onClick={onDownload}
+        className={`${width} min-h-11 cursor-pointer rounded-full bg-sky px-5 text-sm font-semibold text-white transition duration-150 hover:bg-sky-light disabled:cursor-not-allowed disabled:opacity-45`}
+      >
+        Download HTML
+      </button>
+    </>
   )
 }

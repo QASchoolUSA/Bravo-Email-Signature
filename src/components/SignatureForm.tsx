@@ -1,4 +1,6 @@
 import type { SignatureFields } from '../lib/brand'
+import { motion, useReducedMotion } from 'motion/react'
+import { springSoft, staggerItem, staggerList } from '../lib/motion'
 
 type Props = {
   fields: SignatureFields
@@ -9,26 +11,38 @@ const fieldLabels: { key: keyof SignatureFields; label: string; hint?: string; t
   { key: 'fullName', label: 'Full name', hint: 'Required' },
   { key: 'title', label: 'Title', hint: 'Optional' },
   { key: 'email', label: 'Email', type: 'email' },
-  { key: 'mainPhone', label: 'Main phone' },
-  { key: 'extension', label: 'Extension' },
-  { key: 'directPhone', label: 'Direct phone' },
-  { key: 'fax', label: 'Fax' },
+  { key: 'mainPhone', label: 'Main phone', type: 'tel' },
+  { key: 'extension', label: 'Extension', type: 'tel' },
+  { key: 'directPhone', label: 'Direct phone', type: 'tel' },
+  { key: 'fax', label: 'Fax', type: 'tel' },
   { key: 'company', label: 'Company' },
   { key: 'address', label: 'Address' },
   { key: 'website', label: 'Website' },
 ]
 
 export function SignatureForm({ fields, onChange }: Props) {
+  const reduce = useReducedMotion()
+
   function update<K extends keyof SignatureFields>(key: K, value: SignatureFields[K]) {
     onChange({ ...fields, [key]: value })
   }
 
   return (
     <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <motion.div
+        className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+        variants={staggerList}
+        initial={reduce ? false : 'hidden'}
+        animate="show"
+      >
         {fieldLabels.map(({ key, label, hint, type }) => (
-          <div key={key} className={`flex flex-col gap-1.5 ${key === 'address' ? 'sm:col-span-2' : ''}`}>
-            <div className="flex justify-between gap-2 text-[11px] font-semibold tracking-[0.06em] text-accent uppercase">
+          <motion.div
+            key={key}
+            variants={staggerItem}
+            transition={springSoft}
+            className={`flex flex-col gap-1.5 ${key === 'address' ? 'sm:col-span-2' : ''}`}
+          >
+            <div className="flex justify-between gap-2 text-[11px] font-semibold tracking-[0.06em] text-navy uppercase">
               <label htmlFor={key} className="cursor-pointer">
                 {label}
               </label>
@@ -41,13 +55,13 @@ export function SignatureForm({ fields, onChange }: Props) {
               onChange={(e) => update(key, e.target.value)}
               autoComplete="off"
               required={key === 'fullName' || key === 'email'}
-              className="w-full border border-[#d4dee6] bg-white px-3 py-2.5 text-[0.92rem] font-medium text-charcoal outline-none transition duration-150 focus:border-sky focus:ring-3 focus:ring-sky/20"
+              className="min-h-11 w-full rounded-xl border border-line bg-white px-3 py-2.5 text-[0.92rem] font-medium text-charcoal outline-none transition duration-150 focus:border-sky focus:ring-3 focus:ring-sky/20"
             />
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <label htmlFor="showSocial" className="flex cursor-pointer items-center gap-2.5 text-sm text-charcoal">
+      <label htmlFor="showSocial" className="flex min-h-11 cursor-pointer items-center gap-2.5 text-sm text-charcoal">
         <input
           id="showSocial"
           type="checkbox"
