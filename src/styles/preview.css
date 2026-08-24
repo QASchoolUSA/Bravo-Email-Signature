@@ -1,0 +1,19 @@
+.preview-signature {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.preview-signature table {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.preview-signature td {
+  max-width: 100%;
+}
+
+.preview-signature img {
+  max-width: 100% !important;
+  height: auto !important;
+}
