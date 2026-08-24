@@ -28,6 +28,7 @@ export const cdn = {
 /** Local assets for generator UI preview */
 export const local = {
   logo: '/assets/bravo-transport.webp',
+  logoHeader: '/assets/bravo-transport-header.png',
   logoPng: '/assets/bravo-transport.png',
   linkedin: '/assets/linkedin.svg',
   facebook: '/assets/facebook.svg',

@@ -72,16 +72,14 @@ export function SignaturePage() {
       </Link>
 
       <header className="hero">
+        <img src={local.logoHeader} alt="Bravo Transport LLC" className="hero-logo" />
         <div className="hero-brand">
-          <img src={local.logo} alt="Bravo Transport" className="hero-logo" />
-          <div>
-            <p className="eyebrow">Bravo Transport LLC</p>
-            <h1>Email Signature Generator</h1>
-            <p className="lede">
-              Build a client-ready signature with your name and title, then copy or
-              download the HTML for Gmail, Outlook, or Apple Mail.
-            </p>
-          </div>
+          <p className="eyebrow">Bravo Transport LLC</p>
+          <h1>Email Signature Generator</h1>
+          <p className="lede">
+            Build a client-ready signature with your name and title, then copy or
+            download the HTML for Gmail, Outlook, or Apple Mail.
+          </p>
         </div>
       </header>
 

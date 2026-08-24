@@ -40,17 +40,25 @@
 
 .hub-hero {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: clamp(16px, 3vw, 28px);
+  text-align: center;
+  gap: clamp(16px, 2.6vw, 24px);
   animation: hub-fade-up 0.55s ease both;
 }
 
 .hub-logo {
-  width: clamp(104px, 18vw, 148px);
+  width: min(100%, 420px);
+  max-width: 420px;
   height: auto;
-  flex-shrink: 0;
   display: block;
   filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+}
+
+.hub-hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hub-eyebrow {
@@ -72,7 +80,7 @@
 }
 
 .hub-lede {
-  margin: 10px 0 0;
+  margin: 10px auto 0;
   max-width: 36ch;
   font-size: clamp(0.95rem, 2vw, 1.05rem);
   line-height: 1.45;
@@ -263,9 +271,8 @@
 }
 
 @media (max-width: 720px) {
-  .hub-hero {
-    flex-direction: column;
-    align-items: flex-start;
+  .hub-logo {
+    width: min(100%, 320px);
   }
 
   .hub-grid {

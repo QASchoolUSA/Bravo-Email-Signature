@@ -8,9 +8,9 @@ export function HomePage() {
       <div className="hub-atmosphere" aria-hidden="true" />
 
       <header className="hub-hero">
-        <img src={local.logo} alt="Bravo Transport" className="hub-logo" />
+        <img src={local.logoHeader} alt="Bravo Transport LLC" className="hub-logo" />
         <div className="hub-hero-copy">
-          <p className="hub-eyebrow">Bravo Transport</p>
+          <p className="hub-eyebrow">Internal tools</p>
           <h1 className="hub-title">Tools</h1>
           <p className="hub-lede">
             Internal apps for the team — pick a tool to get started.
