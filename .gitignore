@@ -20,3 +20,7 @@ dist-ssr
 # Temp scrape
 _bravo.html
 .just-scrape*
+
+# Cloudflare Wrangler
+.wrangler
+.dev.vars
