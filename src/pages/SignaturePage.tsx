@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SignatureForm } from '../components/SignatureForm'
 import { SignaturePreview } from '../components/SignaturePreview'
-import { defaultFields, local, type SignatureFields } from '../lib/brand'
+import { defaultFields, local, absoluteLogoUrl, type SignatureFields } from '../lib/brand'
 import { buildSignatureHtml } from '../lib/buildSignatureHtml'
 import '../styles/app.css'
 
@@ -20,7 +20,10 @@ export function SignaturePage() {
   const [fields, setFields] = useState<SignatureFields>(defaultFields)
   const [status, setStatus] = useState<string | null>(null)
 
-  const html = useMemo(() => buildSignatureHtml(fields), [fields])
+  const html = useMemo(
+    () => buildSignatureHtml(fields, { logoUrl: absoluteLogoUrl() }),
+    [fields],
+  )
 
   async function copyHtml() {
     try {

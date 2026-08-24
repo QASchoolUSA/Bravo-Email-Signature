@@ -3,6 +3,7 @@ import {
   SERVICES_LINE,
   cdn,
   colors,
+  local,
   socialLinks,
   type SignatureFields,
 } from './brand'
@@ -34,10 +35,14 @@ function telHref(phone: string): string {
 }
 
 /**
- * Outlook-safe table signature. Uses absolute CDN image URLs so pasted
+ * Outlook-safe table signature. Uses absolute image URLs so pasted
  * signatures load assets in Gmail / Outlook / Apple Mail.
  */
-export function buildSignatureHtml(fields: SignatureFields): string {
+export function buildSignatureHtml(
+  fields: SignatureFields,
+  options: { logoUrl: string } = { logoUrl: local.logoPng },
+): string {
+  const logoUrl = escapeHtml(options.logoUrl)
   const name = escapeHtml(fields.fullName.trim())
   const title = fields.title.trim()
   const company = escapeHtml(fields.company.trim())
@@ -100,7 +105,7 @@ export function buildSignatureHtml(fields: SignatureFields): string {
         <tr>
           <td width="140" valign="top" style="width:140px;padding:0 16px 0 0;vertical-align:top;">
             <a href="https://www.bravo-transport.com" target="_blank" style="text-decoration:none;">
-              <img src="${cdn.logo}" width="120" alt="Bravo Transport" style="display:block;width:120px;height:auto;border:0;outline:none;" />
+              <img src="${logoUrl}" width="120" alt="Bravo Transport" style="display:block;width:120px;height:auto;border:0;outline:none;" />
             </a>
           </td>
           <td valign="top" style="padding:0;vertical-align:top;">

@@ -91,9 +91,11 @@ body {
 }
 
 .hero-logo {
-  width: 108px;
+  width: clamp(96px, 16vw, 132px);
   height: auto;
   flex-shrink: 0;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(8, 65, 94, 0.12));
 }
 
 .eyebrow {

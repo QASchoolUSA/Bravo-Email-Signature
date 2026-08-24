@@ -1,4 +1,4 @@
-/** Brand tokens and CDN asset URLs from bravo-transport.com */
+/** Brand tokens and asset URLs for Bravo Transport tools */
 
 export const colors = {
   navy: '#08415E',
@@ -15,7 +15,6 @@ export const colors = {
 
 /** Absolute CDN URLs for exported email HTML (images must load in email clients) */
 export const cdn = {
-  logo: 'https://bravo-transport.com/images/logo_bt.svg',
   linkedin: 'https://bravo-transport.com/icons/linkedin.svg',
   facebook: 'https://bravo-transport.com/icons/facebook.svg',
   fleet: [
@@ -26,10 +25,10 @@ export const cdn = {
   ] as const,
 } as const
 
-/** Local mirrored assets for generator UI preview */
+/** Local assets for generator UI preview */
 export const local = {
-  logo: '/assets/logo_bt.svg',
-  logoPng: '/assets/logo_bt.png',
+  logo: '/assets/bravo-transport.webp',
+  logoPng: '/assets/bravo-transport.png',
   linkedin: '/assets/linkedin.svg',
   facebook: '/assets/facebook.svg',
   fleet: [
@@ -39,6 +38,14 @@ export const local = {
     '/assets/fleet-4.jpg',
   ] as const,
 } as const
+
+/** Absolute logo URL for pasted email signatures.
+ * Uses PNG (with transparency) so Outlook desktop can render the mark.
+ */
+export function absoluteLogoUrl(origin = typeof window !== 'undefined' ? window.location.origin : ''): string {
+  const base = origin.replace(/\/$/, '')
+  return `${base}${local.logoPng}`
+}
 
 export const socialLinks = {
   linkedin: 'https://www.linkedin.com/company/bravo-transport/',
